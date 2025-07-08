@@ -2,10 +2,10 @@ import os
 import pandas as pd
 import shutil
 
-metadata_path = 'C:/Users/Samarth Kale/Documents/GitHub/Hackorbit/dataset/HAM10000_metadata.csv'
-img_dir1 = 'C:/Users/Samarth Kale/Documents/GitHub/Hackorbit/dataset/HAM10000_images_part_1'
-img_dir2 = 'C:/Users/Samarth Kale/Documents/GitHub/Hackorbit/dataset/HAM10000_images_part_2'
-output_dir = 'C:/Users/Samarth Kale/Documents/GitHub/Hackorbit/dataset'
+metadata_path = 'C:/Users/Samarth Kale/Documents/GitHub/Skin-Disease-Detector/dataset/HAM10000_metadata.csv'
+img_dir1 = 'C:/Users/Samarth Kale/Documents/GitHub/Skin-Disease-Detector/dataset/HAM10000_images_part_1'
+img_dir2 = 'C:/Users/Samarth Kale/Documents/GitHub/Skin-Disease-Detector/dataset/HAM10000_images_part_2'
+output_dir = 'C:/Users/Samarth Kale/Documents/GitHub/Skin-Disease-Detector/dataset'
 
 label_map = {
     'mel': 'Melanoma',
