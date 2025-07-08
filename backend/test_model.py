@@ -8,8 +8,8 @@ import os
 import sys
 
 # === Config ===
-MODEL_PATH = "C:/Users/Samarth Kale/Documents/GitHub/Hackorbit/model-2/model_weights.h5"
-LABELS_PATH = "C:/Users/Samarth Kale/Documents/GitHub/Hackorbit/model-2/class_labels.txt"
+MODEL_PATH = "C:/Users/Samarth Kale/Documents/GitHub/Skin-Disease-Detector/model-2/model_weights.h5"
+LABELS_PATH = "C:/Users/Samarth Kale/Documents/GitHub/Skin-Disease-Detector/model-2/class_labels.txt"
 
 # === Load labels ===
 with open(LABELS_PATH, "r") as f:

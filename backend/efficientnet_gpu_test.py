@@ -13,8 +13,8 @@ import os
 IMG_SIZE = 224
 BATCH_SIZE = 32
 EPOCHS = 25
-DATA_DIR = "C:/Users/Samarth Kale/Documents/GitHub/Hackorbit/dataset"
-SAVE_DIR = "C:/Users/Samarth Kale/Documents/GitHub/Hackorbit/model"
+DATA_DIR = "C:/Users/Samarth Kale/Documents/GitHub/Skin-Disease-Detector/dataset"
+SAVE_DIR = "C:/Users/Samarth Kale/Documents/GitHub/Skin-Disease-Detector/model"
 os.makedirs(SAVE_DIR, exist_ok=True)
 
 # === LOAD DATASET ===

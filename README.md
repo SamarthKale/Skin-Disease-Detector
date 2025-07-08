@@ -1,1 +1,1 @@
-# Skin-Disease--Detector
+# Skin-Disease-Detector
