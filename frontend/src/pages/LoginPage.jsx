@@ -47,12 +47,12 @@ const LoginPage = () => {
 
         const data = await res.json();
         if (res.ok) {
-          alert("Signup successful! Redirecting to homepage...");
+          alert("Signup successful!");
           navigate("/home");
         } else {
           setError(data.message || "Signup failed");
         }
-      } catch {
+      } catch (err) {
         setError("Server error");
       }
     } else {
@@ -74,7 +74,7 @@ const LoginPage = () => {
         } else {
           setError(data.message || "Login failed");
         }
-      } catch {
+      } catch (err) {
         setError("Server error");
       }
     }
@@ -166,7 +166,9 @@ const LoginPage = () => {
                   </div>
                 )}
 
-                <button type="submit">{isSignUp ? "Sign Up" : "Login to Dashboard"}</button>
+                <button type="submit">
+                  {isSignUp ? "Sign Up" : "Login to Dashboard"}
+                </button>
               </form>
 
               <p className="account-link">
@@ -178,7 +180,9 @@ const LoginPage = () => {
               </p>
 
               <p className="terms">
-                By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
+                By continuing, you agree to our{" "}
+                <a href="#">Terms of Service</a> and{" "}
+                <a href="#">Privacy Policy</a>.
               </p>
             </div>
           </section>

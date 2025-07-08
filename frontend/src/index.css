@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+.navy-900 {
+  background-color: #1e3a8a;
+}
+.navy-800 {
+  background-color: #1e40af;
+}
+
+@layer utilities {
+  .bg-navy-900 {
+    background-color: #1e3a8a;
+  }
+  .bg-navy-800 {
+    background-color: #1e40af;
+  }
+  .text-navy-900 {
+    color: #1e3a8a;
+  }
+  .text-navy-800 {
+    color: #1e40af;
+  }
+  .border-navy-900 {
+    border-color: #1e3a8a;
+  }
+}
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
+}
+
+
