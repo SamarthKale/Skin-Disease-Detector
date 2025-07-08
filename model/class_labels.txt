@@ -1,0 +1,3 @@
+Benign
+Melanoma
+Nevus
