@@ -27,13 +27,14 @@ CREATE TABLE IF NOT EXISTS patient_records (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 ) ENGINE=InnoDB;
 
--- Skin analysis results table
+-- Skin analysis results table (includes severity)
 CREATE TABLE IF NOT EXISTS skin_analysis (
     id INT AUTO_INCREMENT PRIMARY KEY,
     user_id INT,
     image_path VARCHAR(255),
     prediction VARCHAR(100),
     confidence DECIMAL(5,2),
+    severity VARCHAR(20),
     analysis_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     notes TEXT,
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
