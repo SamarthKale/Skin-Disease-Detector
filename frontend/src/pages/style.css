@@ -815,3 +815,32 @@ body::before {
   border-radius: 12px;
   margin-bottom: 1rem;
 }
+.split-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem 0;
+}
+
+.split-section.reverse {
+  flex-direction: row-reverse;
+}
+
+.image-wrapper {
+  flex: 1;
+  text-align: center;
+}
+
+.text-wrapper {
+  flex: 1;
+  padding: 1rem;
+}
+
+.styled-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 1rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
