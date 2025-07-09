@@ -1,4 +1,3 @@
-// ResourcesPage.jsx
 import React from "react";
 import "./style.css";
 
@@ -19,14 +18,51 @@ const ResourcesPage = () => {
       </header>
 
       <main className="content">
-        <section className="info-section">
-          <h1>Resources</h1>
-          <ul>
-            <li><a href="#">📄 AI & Dermatology: White Paper</a></li>
-            <li><a href="#">📊 Case Studies on AI Diagnostics</a></li>
-            <li><a href="#">📚 Research Publications</a></li>
-            <li><a href="#">🎥 Video Tutorials and Demos</a></li>
-          </ul>
+        <section className="resource-section">
+          <h1 className="resource-heading">Resources</h1>
+          <div className="card-container">
+            <div className="resource-card">
+              <img
+                src="/images/ai-guide.jpg"
+                alt="Skin Scan"
+                className="resource-img"
+              />
+              <h2>Resource 01</h2>
+              <h3>AI-Powered Skin Analysis</h3>
+              <p>
+                Discover how our AI scans your skin and detects dermatological
+                issues instantly from your phone's camera.
+              </p>
+            </div>
+
+            <div className="resource-card">
+              <img
+                src="/images/disease-catalog.jpg"
+                alt="Skincare Routine"
+                className="resource-img"
+              />
+              <h2>Resource 02</h2>
+              <h3>Personalized Care Guides</h3>
+              <p>
+                Get curated skincare routines and product recommendations based
+                on AI diagnostics tailored to your skin type.
+              </p>
+            </div>
+
+            <div className="resource-card">
+              <img
+                src="/images/tutorials.jpg"
+                alt="AI Innovation"
+                className="resource-img"
+              />
+              <h2>Resource 03</h2>
+              <h3>AI & Dermatology Research</h3>
+              <p>
+                Explore our publications, documentation, and innovations behind
+                the VedaralaAI platform.
+              </p>
+            </div>
+          </div>
         </section>
       </main>
 
