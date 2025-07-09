@@ -198,3 +198,8 @@ MIT License – Free to use and modify
 - 📧 Email: [support@vedaralaai.com](mailto:support@vedaralaai.com)
 - 🐛 Issues: GitHub Issue Tracker
 - 📚 Docs: This `README.md`
+
+- ## 📽️ Video Demo
+
+[![Watch the Demo](https://github.com/SamarthKale/Skin-Disease-Detector/raw/2072785b33cea12f35d4e4d68fd6e9fdb23dc13a/demo/demo-thumbnail.jpg)](https://github.com/SamarthKale/Skin-Disease-Detector/raw/2072785b33cea12f35d4e4d68fd6e9fdb23dc13a/demo/demo.mp4)
+
