@@ -1,9 +1,12 @@
-import React, { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/AuthContext";
 import "./style.css";
 
 const LoginPage = () => {
   const navigate = useNavigate();
+  const { setUser } = useContext(AuthContext);
+
   const [isSignUp, setIsSignUp] = useState(false);
   const [formData, setFormData] = useState({
     full_name: "",
@@ -40,42 +43,48 @@ const LoginPage = () => {
           body: JSON.stringify({
             full_name: formData.full_name,
             email: formData.email,
-            username: formData.email,
             password: formData.password,
           }),
         });
 
         const data = await res.json();
         if (res.ok) {
-          alert("Signup successful!");
+          console.log("✅ Signup success:", data);
+          setUser(true);
           navigate("/home");
         } else {
-          setError(data.message || "Signup failed");
+          setError(data.error || "Signup failed");
         }
       } catch (err) {
-        setError("Server error");
+        console.error("Signup error:", err);
+        setError("Server error during signup");
       }
     } else {
       try {
+        const loginPayload = {
+          email: formData.email,
+          password: formData.password,
+        };
+        console.log("🔐 Logging in with:", loginPayload);
+
         const res = await fetch("http://localhost:5000/api/login", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           credentials: "include",
-          body: JSON.stringify({
-            username: formData.email,
-            password: formData.password,
-          }),
+          body: JSON.stringify(loginPayload),
         });
 
         const data = await res.json();
         if (res.ok) {
-          alert("Login successful!");
+          console.log("✅ Login success:", data);
+          setUser(true);
           navigate("/home");
         } else {
-          setError(data.message || "Login failed");
+          setError(data.error || "Login failed");
         }
       } catch (err) {
-        setError("Server error");
+        console.error("Login error:", err);
+        setError("Server error during login");
       }
     }
   };
@@ -85,13 +94,6 @@ const LoginPage = () => {
       <header>
         <div className="container nav">
           <div className="logo">VedaralaAI</div>
-          <nav className="nav-links">
-            <Link to="/">Home</Link>
-            <Link to="/about">About Us</Link>
-            <Link to="/scan">Scan</Link>
-            <Link to="/resources">Resources</Link>
-            <Link to="/contact">Contact</Link>
-          </nav>
         </div>
       </header>
 
@@ -166,9 +168,7 @@ const LoginPage = () => {
                   </div>
                 )}
 
-                <button type="submit">
-                  {isSignUp ? "Sign Up" : "Login to Dashboard"}
-                </button>
+                <button type="submit">{isSignUp ? "Sign Up" : "Login to Dashboard"}</button>
               </form>
 
               <p className="account-link">
@@ -180,9 +180,7 @@ const LoginPage = () => {
               </p>
 
               <p className="terms">
-                By continuing, you agree to our{" "}
-                <a href="#">Terms of Service</a> and{" "}
-                <a href="#">Privacy Policy</a>.
+                By continuing, you agree to our <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.
               </p>
             </div>
           </section>

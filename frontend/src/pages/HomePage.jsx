@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
+import { AuthContext } from "../context/AuthContext";
 import "./style.css";
 
 export default function HomePage() {
-  const { setUser } = useAuth();
+  const { setUser } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -98,19 +98,18 @@ export default function HomePage() {
               </Link>
             </div>
             <div className="image-wrapper">
-             <img
-  src="/images/bacteria.jpg"
-  alt="Our Story"
-  className="about-image styled-image"
-  style={{
-    width: "100%",
-    maxWidth: "800px",
-    height: "700px",         // 👈 explicitly set height
-    objectFit: "cover",      // 👈 ensures it fills space without distortion
-    borderRadius: "12px"
-  }}
-/>
-
+              <img
+                src="/images/bacteria.jpg"
+                alt="Our Story"
+                className="about-image styled-image"
+                style={{
+                  width: "100%",
+                  maxWidth: "800px",
+                  height: "700px",
+                  objectFit: "cover",
+                  borderRadius: "12px"
+                }}
+              />
             </div>
           </div>
         </section>

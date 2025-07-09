@@ -21,47 +21,65 @@ const ResourcesPage = () => {
         <section className="resource-section">
           <h1 className="resource-heading">Resources</h1>
           <div className="card-container">
-            <div className="resource-card">
+            {/* Resource 1: TensorFlow */}
+            <a
+              href="https://www.tensorflow.org/overview"
+              className="resource-card"
+              target="_blank"
+              rel="noreferrer"
+            >
               <img
-                src="/images/hold.jpg"
-                alt="Skin Scan"
+                src="/images/ai-guide.jpg"
+                alt="TensorFlow Overview"
                 className="resource-img"
               />
               <h2>Resource 01</h2>
-              <h3>AI-Powered Skin Analysis</h3>
+              <h3>Introduction to TensorFlow</h3>
               <p>
-                Discover how our AI scans your skin and detects dermatological
-                issues instantly from your phone's camera.
+                TensorFlow is an open-source machine learning framework used to build and train AI models.
+                It powers real-time skin disease detection in VedaralaAI.
               </p>
-            </div>
+            </a>
 
-            <div className="resource-card">
+            {/* Resource 2: NVIDIA CUDA */}
+            <a
+              href="https://developer.nvidia.com/cuda-zone"
+              className="resource-card"
+              target="_blank"
+              rel="noreferrer"
+            >
               <img
                 src="/images/disease-catalog.jpg"
-                alt="Skincare Routine"
+                alt="NVIDIA CUDA"
                 className="resource-img"
               />
               <h2>Resource 02</h2>
-              <h3>Personalized Care Guides</h3>
+              <h3>GPU Acceleration with NVIDIA CUDA</h3>
               <p>
-                Get curated skincare routines and product recommendations based
-                on AI diagnostics tailored to your skin type.
+                Learn how NVIDIA’s CUDA platform accelerates deep learning workflows, enabling
+                efficient training and inference for medical AI applications like ours.
               </p>
-            </div>
+            </a>
 
-            <div className="resource-card">
+            {/* Resource 3: Kaggle HAM10000 Dataset */}
+            <a
+              href="https://www.kaggle.com/datasets/kmader/skin-cancer-mnist-ham10000"
+              className="resource-card"
+              target="_blank"
+              rel="noreferrer"
+            >
               <img
                 src="/images/tutorials.jpg"
-                alt="AI Innovation"
+                alt="HAM10000 Dataset"
                 className="resource-img"
               />
               <h2>Resource 03</h2>
-              <h3>AI & Dermatology Research</h3>
+              <h3>HAM10000 Skin Dataset</h3>
               <p>
-                Explore our publications, documentation, and innovations behind
-                the VedaralaAI platform.
+                Explore this widely used dermatology dataset containing 10,000+ dermatoscopic images.
+                It plays a crucial role in training and benchmarking skin disease classification models.
               </p>
-            </div>
+            </a>
           </div>
         </section>
       </main>

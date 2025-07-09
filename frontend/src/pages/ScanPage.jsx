@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import jsPDF from "jspdf";
+import html2canvas from "html2canvas";
 import "./style.css";
 
 const ScanPage = () => {
@@ -6,14 +8,16 @@ const ScanPage = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [prediction, setPrediction] = useState("");
   const [confidence, setConfidence] = useState("");
+  const [severity, setSeverity] = useState("");
   const [explanation, setExplanation] = useState("");
   const [typedExplanation, setTypedExplanation] = useState("");
   const [location, setLocation] = useState(null);
   const [doctors, setDoctors] = useState([]);
   const [loading, setLoading] = useState(false);
   const [mapKey, setMapKey] = useState("");
+  const [reportHistory, setReportHistory] = useState([]);
+  const [showHistory, setShowHistory] = useState(false);
 
-  // Fetch Google Maps embed key
   useEffect(() => {
     fetch("http://localhost:5000/api/get-map-key")
       .then((res) => res.json())
@@ -21,7 +25,6 @@ const ScanPage = () => {
       .catch((err) => console.error("Map key fetch error:", err));
   }, []);
 
-  // Typing animation for explanation
   useEffect(() => {
     if (!explanation) return;
     let i = 0;
@@ -34,7 +37,6 @@ const ScanPage = () => {
     return () => clearInterval(interval);
   }, [explanation]);
 
-  // Image input change
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -43,7 +45,6 @@ const ScanPage = () => {
     }
   };
 
-  // Trigger camera input
   const handleCameraClick = () => {
     const input = document.createElement("input");
     input.type = "file";
@@ -53,15 +54,16 @@ const ScanPage = () => {
     input.click();
   };
 
-  // Run prediction + explanation + doctor search
   const handleAnalyze = async () => {
     if (!imageFile) return alert("Please upload an image first.");
     setLoading(true);
     setPrediction("");
     setConfidence("");
+    setSeverity("");
     setExplanation("");
     setTypedExplanation("");
     setDoctors([]);
+    setShowHistory(false);
 
     try {
       const formData = new FormData();
@@ -75,14 +77,16 @@ const ScanPage = () => {
       const data = await res.json();
       setPrediction(data.prediction);
       setConfidence(data.confidence);
+      setSeverity(data.severity);
+      setImagePreview(http://localhost:5000/${data.path});
 
       const explainRes = await fetch("http://localhost:5000/api/explain-disease", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ condition: data.prediction }),
+        body: JSON.stringify({ condition: data.prediction, severity: data.severity }),
       });
       const explainData = await explainRes.json();
-      setExplanation(explainData.explanation);
+      setExplanation(explainData.explanation || "No explanation available.");
 
       navigator.geolocation.getCurrentPosition(
         async (pos) => {
@@ -109,9 +113,66 @@ const ScanPage = () => {
     }
   };
 
+  const handleSaveReport = async () => {
+    if (!prediction || !confidence || !imagePreview) {
+      alert("No report data to save.");
+      return;
+    }
+
+    try {
+      const res = await fetch("http://localhost:5000/api/save-report", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({
+          prediction,
+          confidence,
+          image_path: imagePreview,
+        }),
+      });
+      const data = await res.json();
+      alert(data.message || "Report saved.");
+    } catch (err) {
+      console.error("Save error:", err);
+      alert("Error saving report.");
+    }
+  };
+
+  const handleViewReports = async () => {
+    try {
+      const res = await fetch("http://localhost:5000/api/analysis-history", {
+        credentials: "include",
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setReportHistory(data.history || []);
+        setShowHistory(true);
+      } else {
+        alert(data.error || "Failed to load history");
+      }
+    } catch (err) {
+      console.error("History fetch error:", err);
+      alert("Error fetching past reports.");
+    }
+  };
+
+  const downloadReport = async () => {
+    const element = document.getElementById("report-content");
+    if (!element) {
+      alert("Nothing to export.");
+      return;
+    }
+    const canvas = await html2canvas(element, { scale: 2 });
+    const imgData = canvas.toDataURL("image/png");
+    const pdf = new jsPDF("p", "mm", "a4");
+    const pdfWidth = pdf.internal.pageSize.getWidth();
+    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
+    pdf.save(VedaralaAI_Report_${Date.now()}.pdf);
+  };
+
   return (
     <div className="page-wrapper fade-in">
-      {/* Header */}
       <header className="homepage-header">
         <div className="container nav">
           <div className="logo">VedaralaAI</div>
@@ -125,7 +186,6 @@ const ScanPage = () => {
         </div>
       </header>
 
-      {/* Main Content */}
       <main className="content">
         <section className="diagnosis-section">
           <h2>📷 Upload or Scan Skin Image</h2>
@@ -144,23 +204,29 @@ const ScanPage = () => {
             </>
           )}
 
-          {/* Prediction */}
           {prediction && (
-            <div className="terminal-box fade-in">
-              <p>🧠 <strong>Prediction:</strong> <span style={{ color: "#00f5d4" }}>{prediction}</span></p>
-              <p>📊 <strong>Confidence:</strong> <span style={{ color: "#00f5d4" }}>{confidence}</span></p>
+            <div id="report-content">
+              <div className="terminal-box fade-in">
+                <p>🧠 <strong>Prediction:</strong> <span style={{ color: "#00f5d4" }}>{prediction}</span></p>
+                <p>📊 <strong>Confidence:</strong> <span style={{ color: "#00f5d4" }}>{confidence}</span></p>
+                <p>⚠ <strong>Severity:</strong> <span style={{ color: "orange" }}>{severity}</span></p>
+              </div>
+
+              {typedExplanation && (
+                <div className="terminal-box fade-in">
+                  <p>💡 <strong>Condition Info</strong></p>
+                  <p style={{ marginTop: "10px", whiteSpace: "pre-wrap" }}>{typedExplanation}</p>
+                </div>
+              )}
+
+              {imagePreview && (
+                <div style={{ marginTop: "15px", textAlign: "center" }}>
+                  <img src={imagePreview} alt="report" style={{ width: "200px", borderRadius: "10px" }} />
+                </div>
+              )}
             </div>
           )}
 
-          {/* Explanation */}
-          {typedExplanation && (
-            <div className="terminal-box fade-in">
-              <p>💡 <strong>Condition Info</strong></p>
-              <p style={{ marginTop: "10px", whiteSpace: "pre-wrap" }}>{typedExplanation}</p>
-            </div>
-          )}
-
-          {/* Doctor List */}
           {doctors.length > 0 && (
             <div className="terminal-box fade-in">
               <p>🏥 <strong>Nearby Skin Specialists</strong></p>
@@ -174,10 +240,9 @@ const ScanPage = () => {
             </div>
           )}
 
-          {/* Map Embed */}
           {location && mapKey && (
             <div className="map-container fade-in">
-              <p>🗺️ <strong>Location Map</strong></p>
+              <p>🗺 <strong>Location Map</strong></p>
               <iframe
                 title="Nearby Dermatologists"
                 width="100%"
@@ -185,16 +250,35 @@ const ScanPage = () => {
                 style={{ border: "2px solid #00f5d4", borderRadius: "10px" }}
                 loading="lazy"
                 allowFullScreen
-                src={`https://www.google.com/maps/embed/v1/search?key=${mapKey}&q=dermatologist&center=${location.lat},${location.lon}&zoom=13`}>
-              </iframe>
+                src={https://www.google.com/maps/embed/v1/search?key=${mapKey}&q=dermatologist&center=${location.lat},${location.lon}&zoom=13}
+              ></iframe>
             </div>
           )}
 
-          {/* Report Options */}
           <div style={{ marginTop: "30px" }}>
-            <button className="secondary-btn">💾 Save Report</button>
-            <button className="primary-btn" style={{ marginLeft: "1rem" }}>📂 View Past Reports</button>
+            <button className="secondary-btn" onClick={handleSaveReport} disabled={!prediction}>💾 Save Report</button>
+            <button className="primary-btn" style={{ marginLeft: "1rem" }} onClick={handleViewReports}>📂 View Past Reports</button>
+            <button className="secondary-btn" style={{ marginLeft: "1rem" }} onClick={downloadReport} disabled={!prediction}>📄 Download PDF</button>
           </div>
+
+          {showHistory && reportHistory.length > 0 && (
+            <div className="terminal-box fade-in" style={{ marginTop: "20px" }}>
+              <p>📜 <strong>Past Reports</strong></p>
+              <ul style={{ listStyle: "none", padding: 0 }}>
+                {reportHistory.map((report, idx) => (
+                  <li key={idx} style={{ marginBottom: "10px" }}>
+                    <strong>{report.prediction}</strong> ({report.confidence}%)<br />
+                    <small>{new Date(report.created_at).toLocaleString()}</small><br />
+                    <img
+                      src={http://localhost:5000/${report.image_path}}
+                      alt="report"
+                      style={{ width: "150px", borderRadius: "10px", marginTop: "5px" }}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
         </section>
       </main>
 
