@@ -23,7 +23,7 @@ const ResourcesPage = () => {
           <div className="card-container">
             <div className="resource-card">
               <img
-                src="/images/ai-guide.jpg"
+                src="/images/hold.jpg"
                 alt="Skin Scan"
                 className="resource-img"
               />

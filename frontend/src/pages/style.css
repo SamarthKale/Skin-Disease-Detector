@@ -621,7 +621,7 @@ body::before {
 .hero {
   text-align: center;
   padding: 4rem 2rem;
-  background: linear-gradient(135deg, #0d122b, #0c1a3c);
+  background: linear-gradient(135deg, #2f1e60, #0d1a3b);
   color: white;
 }
 
