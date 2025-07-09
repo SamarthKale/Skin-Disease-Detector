@@ -1,0 +1,17 @@
+{
+  "Benign": {
+    "Mild": "This is a mild benign skin condition. Typically harmless and non-cancerous. You can monitor it unless changes are observed.",
+    "Moderate": "This is a moderate benign condition. Dermatologist review recommended to confirm benign nature.",
+    "Severe": "This benign condition appears atypical. Although usually non-cancerous, professional evaluation is advised."
+  },
+  "Melanoma": {
+    "Mild": "Early-stage melanoma detected. Immediate consultation with a specialist is advised for further tests.",
+    "Moderate": "Moderate melanoma risk. Time-sensitive treatment and biopsy may be required.",
+    "Severe": "Severe melanoma prediction. Highly urgent medical attention needed. Possible advanced malignancy."
+  },
+  "Nevus": {
+    "Mild": "This appears to be a mild nevus (mole). Generally harmless but monitor for changes in size or color.",
+    "Moderate": "Moderate nevus detected. Some irregularities noted. Consider dermatologist evaluation.",
+    "Severe": "This nevus appears atypical or irregular. High possibility of dysplastic mole. Specialist review strongly recommended."
+  }
+}
