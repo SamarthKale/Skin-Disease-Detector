@@ -199,7 +199,9 @@ MIT License – Free to use and modify
 - 🐛 Issues: GitHub Issue Tracker
 - 📚 Docs: This `README.md`
 
-- ## 📽️ Video Demo
+## 📽️ Video Demo
 
 [![Watch the Demo](https://github.com/SamarthKale/Skin-Disease-Detector/raw/2072785b33cea12f35d4e4d68fd6e9fdb23dc13a/demo/demo-thumbnail.jpg)](https://github.com/SamarthKale/Skin-Disease-Detector/raw/2072785b33cea12f35d4e4d68fd6e9fdb23dc13a/demo/demo.mp4)
 
+🔗 **Prefer watching instead of downloading?**  
+[Click here to stream the demo on Google Drive](https://drive.google.com/drive/folders/1NF0Fnppw0YopGVwDVxglqj8BLdwmeL_z?usp=sharing)
